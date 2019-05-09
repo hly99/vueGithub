@@ -1,8 +1,10 @@
 <template>
-    <div>
-        <div class="box">
+    <div class="wrapper">
+        <h2>总分：{{sum}} 历史最高分{{max}}</h2>
+        <button @click="start()">重新开始</button>
+        <div class="box" >
         <div class="row" v-for="(row,key) in which" :key="key" >
-        <div class="col" :class="'n-'+col" v-for="(col,kk) in row" :key="kk">{{col}}</div>
+        <div class="col" :class="'n-'+col" v-for="(col,kk) in row" :key="kk"><p v-if="col!=0">{{col}}</p></div>
     </div>
 </div>
 </div>
@@ -12,14 +14,25 @@ import { constants } from 'crypto';
 export default {
     data(){
         return{
-            which:[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+            which:[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],
+            sum:0,
+            max:0
         }
     },
     methods:{
+    start(){
+        if(this.sum>this.max){
+            localStorage.setItem('max', this.sum)
+        }
+        this.max=localStorage.getItem('max')
+        this.which=[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+        this.sum=0
+        this.generate()
+        this.generate()
+    },
     kecode(){
      let vm = this
     document.addEventListener("keyup",function(e){
-        console.log("AA")
     switch (e.keyCode) {
         case 38:
             vm.moveUp()
@@ -51,6 +64,7 @@ export default {
                 }else if(arr[j]===arr[next]){
                     arr[j]=arr[j]*2
                     arr[next]=0
+                    this.sum +=arr[j]
                 }
                 break
             }
@@ -75,6 +89,7 @@ export default {
                 }else if(which[j][i]===which[next][i]){
                     which[j][i]=which[j][i]*2
                     which[next][i]=0
+                    this.sum += which[j][i]
                 }
                 break
             }
@@ -100,6 +115,7 @@ moveRight(){
                 }else if(arr[j]===arr[next]){
                     arr[j]=arr[j]*2
                     arr[next]=0
+                    this.sum +=arr[j]
                 }
                 break
             }
@@ -124,6 +140,7 @@ moveDowm(){
                 }else if(which[j][i]===which[next][i]){
                     which[j][i]=which[j][i]*2
                     which[next][i]=0
+                    this.sum +=which[j][i]
                 }
                 break
             }
@@ -151,14 +168,21 @@ generate(){
 }
     },
     mounted(){
-      this.kecode()
-      this.generate()
-      this.generate()  
-      this.$forceUpdate()
+    this.max=localStorage.getItem('max')
+    this.kecode()
+    this.generate()
+    this.generate()  
+    this.$forceUpdate()
     }
 }
 </script>
 <style>
+.wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
 .box {
     width: 400px;
     height: 400px;
