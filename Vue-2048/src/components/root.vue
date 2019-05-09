@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <h2>总分：{{sum}} 历史最高分{{max}}</h2>
+        <h2>总分：{{sum}} 历史最高分：{{max}}</h2>
         <button @click="start()">重新开始</button>
         <div class="box" >
         <div class="row" v-for="(row,key) in which" :key="key" >
