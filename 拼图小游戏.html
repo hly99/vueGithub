@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div id="app">
-		<transition-group tag='div' name="cell" class='cells' >
+		<transition-group tag='div'  name="cell" class='cells' >
 		  <div v-for='i, idx in items' :class="i!=' '?'cell':'cexx'" :key='i' @click.prevent="on(idx)">{{i}}</div>
 		</transition-group>
 		 <button @click='shuffle'>重置</button>
