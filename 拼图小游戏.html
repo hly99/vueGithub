@@ -9,7 +9,7 @@
 	<title>拼图小游戏</title>
 </head>
 <body>
-	<div id="app">
+	<div id="app" align="center">
 		<transition-group tag='div'  name="cell" class='cells' >
 		  <div v-for='i, idx in items' :class="i!=' '?'cell':'cexx'" :key='i' @click.prevent="on(idx)">{{i}}</div>
 		</transition-group>
@@ -50,7 +50,10 @@
 					alert(6666666666)
 				}
 			}
-		}
+		},
+	mounted: function() {
+		this.shuffle()
+    }
 	})
 </script>
 <style>
